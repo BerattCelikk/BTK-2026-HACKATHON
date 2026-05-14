@@ -56,6 +56,7 @@ export function HealthScoreGauge({ score }: { score: number }) {
           className="transition-all duration-1000 ease-out"
           style={{
             filter: `drop-shadow(0 0 8px ${color.glow})`,
+            animation: clampedScore > 0 ? "pulseGlow 2s ease-in-out infinite" : "none",
           }}
         />
       </svg>
@@ -68,6 +69,12 @@ export function HealthScoreGauge({ score }: { score: number }) {
       <span className="text-xs font-medium" style={{ color: color.stroke }}>
         {getLabel()}
       </span>
+      <style jsx>{`
+        @keyframes pulseGlow {
+          0%, 100% { filter: drop-shadow(0 0 8px ${color.glow}); }
+          50% { filter: drop-shadow(0 0 18px ${color.glow}); }
+        }
+      `}</style>
     </div>
   )
 }
