@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinanceAI Pro — Sunum</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #030712; color: #f9fafb; }
+    .slide {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 4rem 6rem;
+      border-bottom: 1px solid #1f2937;
+    }
+    h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; }
+    h2 { font-size: 2rem; font-weight: 700; color: #10b981; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.25rem; font-weight: 600; color: #06b6d4; margin-bottom: 0.75rem; }
+    p { font-size: 1.125rem; color: #9ca3af; line-height: 1.7; margin-bottom: 1rem; }
+    .subtitle { font-size: 1.25rem; color: #6b7280; margin-top: 0.5rem; }
+    .grid { display: grid; gap: 1.5rem; margin-top: 2rem; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .card {
+      background: rgba(17,24,39,0.6); backdrop-filter: blur(12px);
+      border: 1px solid rgba(6,182,212,0.2); border-radius: 1rem;
+      padding: 1.5rem; box-shadow: 0 0 20px rgba(6,182,212,0.05);
+    }
+    .card h3 { color: #10b981; }
+    .card p { font-size: 0.875rem; color: #6b7280; }
+    .badge {
+      display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px;
+      font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem;
+    }
+    .badge-green { background: rgba(16,185,129,0.15); color: #10b981; }
+    .badge-blue { background: rgba(6,182,212,0.15); color: #06b6d4; }
+    .badge-purple { background: rgba(99,102,241,0.15); color: #6366f1; }
+    .badge-amber { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .gradient-text {
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-size: 2.5rem; font-weight: 800; color: #10b981; }
+    .stat-label { font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem; }
+    .tech-tag {
+      display: inline-block; padding: 0.5rem 1rem; margin: 0.25rem;
+      background: rgba(31,41,55,0.8); border: 1px solid #374151;
+      border-radius: 0.5rem; font-size: 0.875rem; color: #d1d5db;
+    }
+    .footer-note { font-size: 0.75rem; color: #4b5563; margin-top: 3rem; }
+    .emoji-lg { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+    @media (max-width: 768px) {
+      .slide { padding: 2rem; }
+      h1 { font-size: 2rem; }
+      .grid-2, .grid-3, .grid-5 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide" style="text-align:center">
+  <div class="badge badge-green" style="margin:0 auto 1rem">BTK Academy 2026 Hackathon</div>
+  <h1><span class="gradient-text">FinanceAI Pro</span></h1>
+  <p class="subtitle" style="font-size:1.5rem;margin-top:1rem">
+    Multi-Agent AI Financial Advisory Platform
+  </p>
+  <p style="font-size:1.125rem;margin-top:2rem;max-width:600px;margin-left:auto;margin-right:auto">
+    5 specialized AI agents · Google Gemini · LangGraph · Next.js 16 · PostgreSQL
+  </p>
+  <div style="margin-top:3rem">
+    <span class="tech-tag">Next.js 16</span>
+    <span class="tech-tag">TypeScript</span>
+    <span class="tech-tag">Google Gemini</span>
+    <span class="tech-tag">LangGraph</span>
+    <span class="tech-tag">Prisma</span>
+    <span class="tech-tag">PostgreSQL</span>
+    <span class="tech-tag">Clerk</span>
+    <span class="tech-tag">Docker</span>
+  </div>
+  <div class="footer-note">→ Arrow keys to navigate</div>
+</div>
+
+<!-- SLIDE 2: Problem -->
+<div class="slide">
+  <h2>🎯 The Problem</h2>
+  <div class="grid grid-2" style="margin-top:2rem">
+    <div class="card" style="text-align:center;padding:3rem">
+      <div class="stat-number" style="font-size:4rem">68%</div>
+      <p style="font-size:1rem;color:#9ca3af;margin-top:0.5rem">
+        of people have no structured financial plan
+      </p>
+    </div>
+    <div class="card" style="text-align:center;padding:3rem">
+      <div class="stat-number" style="font-size:4rem;color:#ef4444">₺500-2000</div>
+      <p style="font-size:1rem;color:#9ca3af;margin-top:0.5rem">
+        per hour for a professional financial advisor
+      </p>
+    </div>
+  </div>
+  <div class="grid grid-3" style="margin-top:1.5rem">
+    <div class="card"><span class="emoji-lg">💰</span><h3>Expensive</h3><p>Financial advice is a luxury few can afford</p></div>
+    <div class="card"><span class="emoji-lg">⏰</span><h3>Inaccessible</h3><p>Limited availability, appointment required</p></div>
+    <div class="card"><span class="emoji-lg">👤</span><h3>One-Size-Fits-All</h3><p>Generic advice not tailored to you</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Solution - Architecture -->
+<div class="slide">
+  <h2>🧠 Solution: Multi-Agent Architecture</h2>
+  <p>5 specialized AI agents working together via LangGraph orchestration</p>
+  <div class="grid grid-5" style="margin-top:2rem">
+    <div class="card" style="text-align:center;padding:2rem 1rem">
+      <div class="badge badge-green" style="margin:0 auto 0.5rem">Analyst</div>
+      <span style="font-size:1.5rem">📊</span>
+      <p style="margin-top:0.5rem;font-size:0.75rem">Income/Expense analysis</p>
+    </div>
+    <div class="card" style="text-align:center;padding:2rem 1rem">
+      <div class="badge badge-blue" style="margin:0 auto 0.5rem">Investment</div>
+      <span style="font-size:1.5rem">📈</span>
+      <p style="margin-top:0.5rem;font-size:0.75rem">Portfolio simulation</p>
+    </div>
+    <div class="card" style="text-align:center;padding:2rem 1rem">
+      <div class="badge badge-green" style="margin:0 auto 0.5rem">Budget</div>
+      <span style="font-size:1.5rem">💰</span>
+      <p style="margin-top:0.5rem;font-size:0.75rem">Optimization</p>
+    </div>
+    <div class="card" style="text-align:center;padding:2rem 1rem">
+      <div class="badge badge-amber" style="margin:0 auto 0.5rem">Education</div>
+      <span style="font-size:1.5rem">📚</span>
+      <p style="margin-top:0.5rem;font-size:0.75rem">Financial literacy</p>
+    </div>
+    <div class="card" style="text-align:center;padding:2rem 1rem">
+      <div class="badge badge-purple" style="margin:0 auto 0.5rem">Debt</div>
+      <span style="font-size:1.5rem">🛡️</span>
+      <p style="margin-top:0.5rem;font-size:0.75rem">Payoff strategies</p>
+    </div>
+  </div>
+  <div style="margin-top:2rem;
+    background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);
+    border-radius:1rem;padding:1.5rem;text-align:center">
+    <h3 style="color:#6366f1;margin-bottom:0.5rem">🎯 LangGraph Orchestrator</h3>
+    <p style="font-size:0.875rem">Intent classification → Agent routing → Tool calling → Response synthesis</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: Key Features -->
+<div class="slide">
+  <h2>✨ Key Features</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <div class="badge badge-green">AI</div>
+      <h3>Proactive Intelligence</h3>
+      <p>Daily AI Briefing • Anomaly Detection • Receipt Scanner (Vision)</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-blue">Visual</div>
+      <h3>Analytics</h3>
+      <p>Health Score Gauge • Gamified Badges • Debt Payoff Charts • Market Ticker</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-purple">Enterprise</div>
+      <h3>Export & Reports</h3>
+      <p>CSV Download • Print Reports • Transaction Management</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-amber">Multi-Agent</div>
+      <h3>Smart Chat</h3>
+      <p>5 specialist agents • Intent routing • Tool calling</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-green">Auth</div>
+      <h3>Secure</h3>
+      <p>Clerk SSO • Session management • Webhook integration</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-blue">DevOps</div>
+      <h3>Production Ready</h3>
+      <p>Docker • PostgreSQL • Standalone output • Error boundaries</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Tech Deep Dive -->
+<div class="slide">
+  <h2>⚙️ Technical Excellence</h2>
+  <div class="grid grid-2" style="margin-top:2rem">
+    <div class="card">
+      <div class="badge badge-purple">Frontend</div>
+      <p>Next.js 16 App Router • React 19 Server Components • Tailwind CSS 4 • Framer Motion • Chart.js</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-green">AI</div>
+      <p>Google Gemini Pro • Gemini 1.5 Flash • Gemini Pro Vision • LangGraph orchestration • Function calling</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-blue">Database</div>
+      <p>PostgreSQL 16 • Prisma ORM (PgBoss adapter) • 8 models • 16 transaction categories • Type-safe queries</p>
+    </div>
+    <div class="card">
+      <div class="badge badge-amber">Infrastructure</div>
+      <p>Docker multi-stage build • Docker Compose • Standalone output • Clerk auth webhooks • Error boundaries</p>
+    </div>
+  </div>
+  <div class="grid grid-3" style="margin-top:1.5rem;text-align:center">
+    <div class="stat"><div class="stat-number">5</div><div class="stat-label">AI Agents</div></div>
+    <div class="stat"><div class="stat-number">16</div><div class="stat-label">API Endpoints</div></div>
+    <div class="stat"><div class="stat-number">7</div><div class="stat-label">Dashboard Pages</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Innovation Highlights -->
+<div class="slide">
+  <h2>🚀 Innovation Highlights</h2>
+  <div class="grid grid-2" style="margin-top:2rem">
+    <div class="card" style="padding:2rem">
+      <span style="font-size:2rem">👁️</span>
+      <h3 style="margin-top:0.75rem">Smart Receipt Scanner</h3>
+      <p>Gemini Pro Vision extracts amount, category, and description from receipt images. No manual entry needed.</p>
+    </div>
+    <div class="card" style="padding:2rem">
+      <span style="font-size:2rem">🕵️</span>
+      <h3 style="margin-top:0.75rem">Autonomous Anomaly Detection</h3>
+      <p>AI analyzes 3 months of spending history — detects spikes, duplicates, and unusual patterns automatically.</p>
+    </div>
+    <div class="card" style="padding:2rem">
+      <span style="font-size:2rem">📊</span>
+      <h3 style="margin-top:0.75rem">Financial Health Score</h3>
+      <p>0-100 score based on savings rate, debt management, and budget adherence. Animated SVG gauge with glow effects.</p>
+    </div>
+    <div class="card" style="padding:2rem">
+      <span style="font-size:2rem">🎮</span>
+      <h3 style="margin-top:0.75rem">Gamified Badges</h3>
+      <p>5 achievements with emerald glow effects. Unlock "Tasarruf Ustası", "Borç Yokedici", and more.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Live Demo -->
+<div class="slide" style="text-align:center">
+  <h2>🎬 Live Demo</h2>
+  <div style="font-size:4rem;margin:2rem 0">▶️</div>
+  <p style="font-size:1.5rem;color:#d1d5db">5-minute walkthrough of all features</p>
+  <div class="grid grid-3" style="margin-top:2rem;max-width:800px;margin-left:auto;margin-right:auto">
+    <div>
+      <div class="badge badge-green" style="margin:0 auto 0.5rem">Dashboard</div>
+      <p style="font-size:0.875rem">Health score, badges, anomaly alerts, daily briefing</p>
+    </div>
+    <div>
+      <div class="badge badge-blue" style="margin:0 auto 0.5rem">Features</div>
+      <p style="font-size:0.875rem">Receipt scanner, debt visualizer, market ticker, CSV export</p>
+    </div>
+    <div>
+      <div class="badge badge-purple" style="margin:0 auto 0.5rem">AI Chat</div>
+      <p style="font-size:0.875rem">Multi-agent conversation with tool calling</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Thank You -->
+<div class="slide" style="text-align:center">
+  <h1><span class="gradient-text">Teşekkür Ederim</span></h1>
+  <p style="font-size:1.5rem;margin-top:1rem;color:#d1d5db">FinanceAI Pro</p>
+  <p style="font-size:1rem;margin-top:0.5rem;color:#6b7280">BTK Academy 2026 Hackathon</p>
+  <div style="margin-top:3rem">
+    <span class="tech-tag">Next.js 16</span>
+    <span class="tech-tag">Google Gemini</span>
+    <span class="tech-tag">LangGraph</span>
+    <span class="tech-tag">PostgreSQL</span>
+    <span class="tech-tag">TypeScript</span>
+  </div>
+  <div class="footer-note" style="margin-top:3rem">github.com/yourusername/financeai-pro</div>
+</div>
+
+</body>
+</html>
