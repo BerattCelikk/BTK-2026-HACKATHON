@@ -53,7 +53,7 @@ export default function Error({
             variant="outline"
             className="flex-1 border-cyan-500/20 text-gray-300 hover:bg-cyan-500/5"
           >
-            Dashboard'a Git
+            Kontrol Paneline Git
           </Button>
         </div>
       </div>

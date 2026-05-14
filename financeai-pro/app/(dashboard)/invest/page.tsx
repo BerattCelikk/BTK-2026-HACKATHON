@@ -94,14 +94,14 @@ export default function InvestPage() {
               <div className="space-y-2">
                 <label className="text-sm text-gray-400">Risk Profili</label>
                 <Select value={riskProfile} onValueChange={setRiskProfile}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-gray-800/50 border-cyan-500/20 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="conservative">Düşük Risk</SelectItem>
-                    <SelectItem value="moderate">Orta Risk</SelectItem>
-                    <SelectItem value="aggressive">Yüksek Risk</SelectItem>
-                    <SelectItem value="very_aggressive">Çok Yüksek Risk</SelectItem>
+                    <SelectItem value="conservative">Düşük Risk (Muhafazakâr)</SelectItem>
+                    <SelectItem value="moderate">Orta Risk (Dengeli)</SelectItem>
+                    <SelectItem value="aggressive">Yüksek Risk (Agresif)</SelectItem>
+                    <SelectItem value="very_aggressive">Çok Yüksek Risk (Çok Agresif)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
