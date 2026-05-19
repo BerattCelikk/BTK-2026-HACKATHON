@@ -3,58 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinanceAI Pro — Sunum</title>
+  <title>FinanceAI Pro — Startup Pitch</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: #030712; color: #f9fafb; }
+    body { font-family: 'Inter', sans-serif; background: #030712; color: #f9fafb; overflow-x: hidden; }
     .slide {
       min-height: 100vh; display: flex; flex-direction: column;
       justify-content: center; padding: 4rem 6rem;
       border-bottom: 1px solid #1f2937;
+      position: relative;
     }
-    h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; }
-    h2 { font-size: 2rem; font-weight: 700; color: #10b981; margin-bottom: 1.5rem; }
-    h3 { font-size: 1.25rem; font-weight: 600; color: #06b6d4; margin-bottom: 0.75rem; }
-    p { font-size: 1.125rem; color: #9ca3af; line-height: 1.7; margin-bottom: 1rem; }
-    .subtitle { font-size: 1.25rem; color: #6b7280; margin-top: 0.5rem; }
-    .grid { display: grid; gap: 1.5rem; margin-top: 2rem; }
+    h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    h2 { font-size: 2.5rem; font-weight: 700; color: #10b981; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.5rem; font-weight: 600; color: #06b6d4; margin-bottom: 1rem; }
+    p { font-size: 1.25rem; color: #9ca3af; line-height: 1.7; margin-bottom: 1.5rem; }
+    .subtitle { font-size: 1.5rem; color: #6b7280; margin-top: 0.5rem; }
+    .grid { display: grid; gap: 2rem; margin-top: 2rem; }
     .grid-2 { grid-template-columns: 1fr 1fr; }
     .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-    .grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
     .card {
-      background: rgba(17,24,39,0.6); backdrop-filter: blur(12px);
-      border: 1px solid rgba(6,182,212,0.2); border-radius: 1rem;
-      padding: 1.5rem; box-shadow: 0 0 20px rgba(6,182,212,0.05);
+      background: rgba(17,24,39,0.4); backdrop-filter: blur(20px);
+      border: 1px solid rgba(16,185,129,0.2); border-radius: 1.5rem;
+      padding: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
     }
-    .card h3 { color: #10b981; }
-    .card p { font-size: 0.875rem; color: #6b7280; }
+    .card:hover { transform: translateY(-5px); border-color: rgba(16,185,129,0.5); }
+    .card h3 { color: #f9fafb; margin-bottom: 0.5rem; }
+    .card p { font-size: 1rem; color: #9ca3af; margin-bottom: 0; }
     .badge {
-      display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px;
-      font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem;
+      display: inline-block; padding: 0.4rem 1rem; border-radius: 9999px;
+      font-size: 0.875rem; font-weight: 700; margin-bottom: 1rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
     }
-    .badge-green { background: rgba(16,185,129,0.15); color: #10b981; }
-    .badge-blue { background: rgba(6,182,212,0.15); color: #06b6d4; }
-    .badge-purple { background: rgba(99,102,241,0.15); color: #6366f1; }
-    .badge-amber { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .badge-green { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+    .badge-blue { background: rgba(6,182,212,0.1); color: #06b6d4; border: 1px solid rgba(6,182,212,0.2); }
+    .badge-purple { background: rgba(139,92,246,0.1); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); }
     .gradient-text {
-      background: linear-gradient(135deg, #10b981, #06b6d4);
+      background: linear-gradient(135deg, #10b981, #3b82f6);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .stat { text-align: center; }
-    .stat-number { font-size: 2.5rem; font-weight: 800; color: #10b981; }
-    .stat-label { font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem; }
+    .stat-number { font-size: 3.5rem; font-weight: 800; color: #10b981; }
+    .stat-label { font-size: 1rem; color: #6b7280; font-weight: 600; }
     .tech-tag {
-      display: inline-block; padding: 0.5rem 1rem; margin: 0.25rem;
-      background: rgba(31,41,55,0.8); border: 1px solid #374151;
-      border-radius: 0.5rem; font-size: 0.875rem; color: #d1d5db;
+      display: inline-block; padding: 0.6rem 1.2rem; margin: 0.4rem;
+      background: rgba(31,41,55,0.5); border: 1px solid #374151;
+      border-radius: 0.75rem; font-size: 0.9rem; color: #d1d5db; font-weight: 500;
     }
-    .footer-note { font-size: 0.75rem; color: #4b5563; margin-top: 3rem; }
-    .emoji-lg { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
-    @media (max-width: 768px) {
-      .slide { padding: 2rem; }
-      h1 { font-size: 2rem; }
-      .grid-2, .grid-3, .grid-5 { grid-template-columns: 1fr; }
+    .pricing-card { border: 2px solid #10b981; background: rgba(16,185,129,0.05); }
+    .footer-note { font-size: 0.875rem; color: #4b5563; margin-top: 4rem; text-align: center; }
+    @media (max-width: 1024px) {
+      .slide { padding: 3rem; }
+      h1 { font-size: 2.5rem; }
+      .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .slide { padding: 2rem 1.5rem; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -62,216 +68,159 @@
 
 <!-- SLIDE 1: Title -->
 <div class="slide" style="text-align:center">
-  <div class="badge badge-green" style="margin:0 auto 1rem">BTK Academy 2026 Hackathon</div>
-  <h1><span class="gradient-text">FinanceAI Pro</span></h1>
-  <p class="subtitle" style="font-size:1.5rem;margin-top:1rem">
-    Multi-Agent AI Financial Advisory Platform
-  </p>
-  <p style="font-size:1.125rem;margin-top:2rem;max-width:600px;margin-left:auto;margin-right:auto">
-    5 specialized AI agents · Google Gemini · LangGraph · Next.js 16 · PostgreSQL
-  </p>
-  <div style="margin-top:3rem">
-    <span class="tech-tag">Next.js 16</span>
-    <span class="tech-tag">TypeScript</span>
-    <span class="tech-tag">Google Gemini</span>
-    <span class="tech-tag">LangGraph</span>
-    <span class="tech-tag">Prisma</span>
-    <span class="tech-tag">PostgreSQL</span>
-    <span class="tech-tag">Clerk</span>
-    <span class="tech-tag">Docker</span>
+  <div class="badge badge-green">FinanceAI Pro — BTK Hackathon 2026</div>
+  <h1><span class="gradient-text">Geleceğin Finansal Asistanı</span></h1>
+  <p class="subtitle">Multi-Agent AI Financial Advisory SaaS</p>
+  <div style="margin-top:4rem">
+    <div class="grid grid-4">
+      <div class="stat">
+        <div class="stat-number">7</div>
+        <div class="stat-label">AI AJAN</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">OTONOM ANALİZ</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">₺0</div>
+        <div class="stat-label">BAŞLANGIÇ MALİYETİ</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">YERLİ KONTEKST</div>
+      </div>
+    </div>
   </div>
-  <div class="footer-note">→ Arrow keys to navigate</div>
+  <div class="footer-note">Gezinmek için aşağı kaydırın veya ok tuşlarını kullanın</div>
 </div>
 
-<!-- SLIDE 2: Problem -->
+<!-- SLIDE 2: Problem & Market -->
 <div class="slide">
-  <h2>🎯 The Problem</h2>
-  <div class="grid grid-2" style="margin-top:2rem">
-    <div class="card" style="text-align:center;padding:3rem">
-      <div class="stat-number" style="font-size:4rem">68%</div>
-      <p style="font-size:1rem;color:#9ca3af;margin-top:0.5rem">
-        of people have no structured financial plan
-      </p>
+  <div class="badge badge-purple">Pazar Fırsatı</div>
+  <h2>Finansal Danışmanlık Erişilemez durumda</h2>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Profesyonel Destek Çok Pahalı</h3>
+      <p>Türkiye'de bağımsız bir finansal danışmanın saatlik ücreti ₺1.000'den başlıyor. Genç profesyoneller ve KOBİ'ler için bu hizmet lüks statüsünde.</p>
     </div>
-    <div class="card" style="text-align:center;padding:3rem">
-      <div class="stat-number" style="font-size:4rem;color:#ef4444">₺500-2000</div>
-      <p style="font-size:1rem;color:#9ca3af;margin-top:0.5rem">
-        per hour for a professional financial advisor
-      </p>
+    <div class="card">
+      <h3>Yatırım Kafa Karıştırıcı</h3>
+      <p>BIST100, Altın, Kripto, Mevduat... Kullanıcılar hangi varlığa ne zaman ve ne kadar yatırım yapacaklarını bilmiyorlar.</p>
     </div>
   </div>
-  <div class="grid grid-3" style="margin-top:1.5rem">
-    <div class="card"><span class="emoji-lg">💰</span><h3>Expensive</h3><p>Financial advice is a luxury few can afford</p></div>
-    <div class="card"><span class="emoji-lg">⏰</span><h3>Inaccessible</h3><p>Limited availability, appointment required</p></div>
-    <div class="card"><span class="emoji-lg">👤</span><h3>One-Size-Fits-All</h3><p>Generic advice not tailored to you</p></div>
-  </div>
-</div>
-
-<!-- SLIDE 3: Solution - Architecture -->
-<div class="slide">
-  <h2>🧠 Solution: Multi-Agent Architecture</h2>
-  <p>5 specialized AI agents working together via LangGraph orchestration</p>
-  <div class="grid grid-5" style="margin-top:2rem">
-    <div class="card" style="text-align:center;padding:2rem 1rem">
-      <div class="badge badge-green" style="margin:0 auto 0.5rem">Analyst</div>
-      <span style="font-size:1.5rem">📊</span>
-      <p style="margin-top:0.5rem;font-size:0.75rem">Income/Expense analysis</p>
-    </div>
-    <div class="card" style="text-align:center;padding:2rem 1rem">
-      <div class="badge badge-blue" style="margin:0 auto 0.5rem">Investment</div>
-      <span style="font-size:1.5rem">📈</span>
-      <p style="margin-top:0.5rem;font-size:0.75rem">Portfolio simulation</p>
-    </div>
-    <div class="card" style="text-align:center;padding:2rem 1rem">
-      <div class="badge badge-green" style="margin:0 auto 0.5rem">Budget</div>
-      <span style="font-size:1.5rem">💰</span>
-      <p style="margin-top:0.5rem;font-size:0.75rem">Optimization</p>
-    </div>
-    <div class="card" style="text-align:center;padding:2rem 1rem">
-      <div class="badge badge-amber" style="margin:0 auto 0.5rem">Education</div>
-      <span style="font-size:1.5rem">📚</span>
-      <p style="margin-top:0.5rem;font-size:0.75rem">Financial literacy</p>
-    </div>
-    <div class="card" style="text-align:center;padding:2rem 1rem">
-      <div class="badge badge-purple" style="margin:0 auto 0.5rem">Debt</div>
-      <span style="font-size:1.5rem">🛡️</span>
-      <p style="margin-top:0.5rem;font-size:0.75rem">Payoff strategies</p>
-    </div>
-  </div>
-  <div style="margin-top:2rem;
-    background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);
-    border-radius:1rem;padding:1.5rem;text-align:center">
-    <h3 style="color:#6366f1;margin-bottom:0.5rem">🎯 LangGraph Orchestrator</h3>
-    <p style="font-size:0.875rem">Intent classification → Agent routing → Tool calling → Response synthesis</p>
+  <div class="grid grid-3" style="margin-top:2rem">
+    <div class="stat"><div class="stat-number">30M</div><div class="stat-label">Hedef Kullanıcı (Genç & KOBİ)</div></div>
+    <div class="stat"><div class="stat-number">68%</div><div class="stat-label">Finansal Planı Olmayanlar</div></div>
+    <div class="stat"><div class="stat-number">₺40K</div><div class="stat-label">Ortalama Kayıp Vergi Fırsatı/Yıl</div></div>
   </div>
 </div>
 
-<!-- SLIDE 4: Key Features -->
+<!-- SLIDE 3: Solution - AI Agents -->
 <div class="slide">
-  <h2>✨ Key Features</h2>
+  <div class="badge badge-blue">Çözümümüz</div>
+  <h2>Otonom ve İşbirlikçi 7 AI Ajanı</h2>
+  <p>FinanceAI Pro, bir chatbot değil; sizin için 7/24 çalışan bir finans ekibidir.</p>
+  <div class="grid grid-4">
+    <div class="card"><h3>Analist</h3><p>Gelir/Gider ve Trend analizi yapar.</p></div>
+    <div class="card"><h3>Yatırım</h3><p>Varlık dağılımı ve sinyaller üretir.</p></div>
+    <div class="card"><h3>Bütçe</h3><p>Harcamaları kalem kalem optimize eder.</p></div>
+    <div class="card"><h3>Vergi</h3><p>Türkiye mevzuatına göre tasarruf bulur.</p></div>
+  </div>
+  <div style="margin-top:2rem; background:rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.2); border-radius:1.5rem; padding:2rem; text-align:center">
+    <h3 style="color:#10b981">Orkestrasyon Katmanı (V2)</h3>
+    <p style="font-size:1.125rem">Ajanlar birbirleriyle konuşur. Analist, Bütçe Uzmanına danışarak size "Kahveden tasarruf edip hisseye aktar" tavsiyesi verir.</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: Advanced Features -->
+<div class="slide">
+  <div class="badge badge-green">Teknolojik Fark</div>
+  <h2>Sıradan Uygulamaların Ötesinde</h2>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Anomali Tespit Sistemi</h3>
+      <p>Harcamalarınızdaki sapmaları %10 hassasiyetle yakalar ve anlık bildirim gönderir. "Bugün yemeğe fazla mı harcadın?"</p>
+    </div>
+    <div class="card">
+      <h3>Vergi Optimizasyonu (TR)</h3>
+      <p>BES devlet katkısı, uzun vadeli tutma avantajı ve stopaj indirimlerini sizin için hesaplar. Yılda ₺40.000'e varan tasarruf.</p>
+    </div>
+    <div class="card">
+      <h3>Yatırım Sinyal Tarayıcı</h3>
+      <p>BIST100 ve Kripto piyasalarını RSI/MACD ile tarar, risk profilinize uygun "AL/SAT/TUT" tavsiyeleri verir.</p>
+    </div>
+    <div class="card">
+      <h3>Smart Wealth Forecast</h3>
+      <p>Bileşik getiri ve enflasyon düzeltmeli 20 yıllık servet projeksiyonu. AI destekli "Nereye varacağım?" analizi.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: SaaS Model -->
+<div class="slide">
+  <div class="badge badge-purple">İş Modeli</div>
+  <h2>Büyüme Stratejisi ve Monetizasyon</h2>
   <div class="grid grid-3">
     <div class="card">
-      <div class="badge badge-green">AI</div>
-      <h3>Proactive Intelligence</h3>
-      <p>Daily AI Briefing • Anomaly Detection • Receipt Scanner (Vision)</p>
+      <h3>Ücretsiz</h3>
+      <p style="font-size:1.5rem; color:#f9fafb; font-weight:800; margin:1rem 0">₺0</p>
+      <p>Temel Dashboard<br>Harcama Takibi<br>1 Ajan Chat/Ay</p>
+    </div>
+    <div class="card pricing-card">
+      <h3>Premium</h3>
+      <p style="font-size:1.5rem; color:#10b981; font-weight:800; margin:1rem 0">₺99 / Ay</p>
+      <p>Sınırsız AI Ajanı<br>Gelişmiş Analitik<br>Vergi Optimizasyonu<br>PDF Raporları</p>
     </div>
     <div class="card">
-      <div class="badge badge-blue">Visual</div>
-      <h3>Analytics</h3>
-      <p>Health Score Gauge • Gamified Badges • Debt Payoff Charts • Market Ticker</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-purple">Enterprise</div>
-      <h3>Export & Reports</h3>
-      <p>CSV Download • Print Reports • Transaction Management</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-amber">Multi-Agent</div>
-      <h3>Smart Chat</h3>
-      <p>5 specialist agents • Intent routing • Tool calling</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-green">Auth</div>
-      <h3>Secure</h3>
-      <p>Clerk SSO • Session management • Webhook integration</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-blue">DevOps</div>
-      <h3>Production Ready</h3>
-      <p>Docker • PostgreSQL • Standalone output • Error boundaries</p>
+      <h3>Enterprise</h3>
+      <p style="font-size:1.5rem; color:#f9fafb; font-weight:800; margin:1rem 0">Teklif Alın</p>
+      <p>Bankalar için White-label<br>Kurumsal API Erişimi<br>Özel AI Eğitimi</p>
     </div>
   </div>
-</div>
-
-<!-- SLIDE 5: Tech Deep Dive -->
-<div class="slide">
-  <h2>⚙️ Technical Excellence</h2>
   <div class="grid grid-2" style="margin-top:2rem">
-    <div class="card">
-      <div class="badge badge-purple">Frontend</div>
-      <p>Next.js 16 App Router • React 19 Server Components • Tailwind CSS 4 • Framer Motion • Chart.js</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-green">AI</div>
-      <p>Google Gemini Pro • Gemini 1.5 Flash • Gemini Pro Vision • LangGraph orchestration • Function calling</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-blue">Database</div>
-      <p>PostgreSQL 16 • Prisma ORM (PgBoss adapter) • 8 models • 16 transaction categories • Type-safe queries</p>
-    </div>
-    <div class="card">
-      <div class="badge badge-amber">Infrastructure</div>
-      <p>Docker multi-stage build • Docker Compose • Standalone output • Clerk auth webhooks • Error boundaries</p>
-    </div>
-  </div>
-  <div class="grid grid-3" style="margin-top:1.5rem;text-align:center">
-    <div class="stat"><div class="stat-number">5</div><div class="stat-label">AI Agents</div></div>
-    <div class="stat"><div class="stat-number">16</div><div class="stat-label">API Endpoints</div></div>
-    <div class="stat"><div class="stat-number">7</div><div class="stat-label">Dashboard Pages</div></div>
+    <div class="stat"><div class="stat-number">24:1</div><div class="stat-label">LTV:CAC Oranı</div></div>
+    <div class="stat"><div class="stat-number">5%</div><div class="stat-label">Beklenen Dönüşüm Oranı</div></div>
   </div>
 </div>
 
-<!-- SLIDE 6: Innovation Highlights -->
+<!-- SLIDE 6: Tech Stack -->
 <div class="slide">
-  <h2>🚀 Innovation Highlights</h2>
-  <div class="grid grid-2" style="margin-top:2rem">
-    <div class="card" style="padding:2rem">
-      <span style="font-size:2rem">👁️</span>
-      <h3 style="margin-top:0.75rem">Smart Receipt Scanner</h3>
-      <p>Gemini Pro Vision extracts amount, category, and description from receipt images. No manual entry needed.</p>
+  <div class="badge badge-blue">Teknoloji</div>
+  <h2>Ölçeklenebilir ve Güvenli Altyapı</h2>
+  <div style="margin-top:2rem">
+    <span class="tech-tag">Next.js 16 (React 19)</span>
+    <span class="tech-tag">Google Gemini 1.5 Flash</span>
+    <span class="tech-tag">LangGraph (Multi-Agent)</span>
+    <span class="tech-tag">PostgreSQL + pgvector</span>
+    <span class="tech-tag">Redis (Caching)</span>
+    <span class="tech-tag">Clerk Auth</span>
+    <span class="tech-tag">Prisma ORM</span>
+    <span class="tech-tag">Tailwind CSS 4</span>
+  </div>
+  <div class="grid grid-2" style="margin-top:3rem">
+    <div class="card">
+      <h3>Güvenlik Birinci Öncelik</h3>
+      <p>Verileriniz Clerk ile şifrelenir. Finansal veriler anonimleştirilerek AI modellerine iletilir.</p>
     </div>
-    <div class="card" style="padding:2rem">
-      <span style="font-size:2rem">🕵️</span>
-      <h3 style="margin-top:0.75rem">Autonomous Anomaly Detection</h3>
-      <p>AI analyzes 3 months of spending history — detects spikes, duplicates, and unusual patterns automatically.</p>
-    </div>
-    <div class="card" style="padding:2rem">
-      <span style="font-size:2rem">📊</span>
-      <h3 style="margin-top:0.75rem">Financial Health Score</h3>
-      <p>0-100 score based on savings rate, debt management, and budget adherence. Animated SVG gauge with glow effects.</p>
-    </div>
-    <div class="card" style="padding:2rem">
-      <span style="font-size:2rem">🎮</span>
-      <h3 style="margin-top:0.75rem">Gamified Badges</h3>
-      <p>5 achievements with emerald glow effects. Unlock "Tasarruf Ustası", "Borç Yokedici", and more.</p>
+    <div class="card">
+      <h3>Otonom Ölçeklenme</h3>
+      <p>Serverless mimari sayesinde 1.000 kullanıcıdan 1.000.000 kullanıcıya sıfır manuel müdahale ile ölçeklenir.</p>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 7: Live Demo -->
+<!-- SLIDE 7: Summary & Vision -->
 <div class="slide" style="text-align:center">
-  <h2>🎬 Live Demo</h2>
-  <div style="font-size:4rem;margin:2rem 0">▶️</div>
-  <p style="font-size:1.5rem;color:#d1d5db">5-minute walkthrough of all features</p>
-  <div class="grid grid-3" style="margin-top:2rem;max-width:800px;margin-left:auto;margin-right:auto">
-    <div>
-      <div class="badge badge-green" style="margin:0 auto 0.5rem">Dashboard</div>
-      <p style="font-size:0.875rem">Health score, badges, anomaly alerts, daily briefing</p>
-    </div>
-    <div>
-      <div class="badge badge-blue" style="margin:0 auto 0.5rem">Features</div>
-      <p style="font-size:0.875rem">Receipt scanner, debt visualizer, market ticker, CSV export</p>
-    </div>
-    <div>
-      <div class="badge badge-purple" style="margin:0 auto 0.5rem">AI Chat</div>
-      <p style="font-size:0.875rem">Multi-agent conversation with tool calling</p>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 8: Thank You -->
-<div class="slide" style="text-align:center">
-  <h1><span class="gradient-text">Teşekkür Ederim</span></h1>
-  <p style="font-size:1.5rem;margin-top:1rem;color:#d1d5db">FinanceAI Pro</p>
-  <p style="font-size:1rem;margin-top:0.5rem;color:#6b7280">BTK Academy 2026 Hackathon</p>
+  <h1>Finansal Özgürlüğü <span class="gradient-text">Demokratikleştiriyoruz</span></h1>
+  <p style="max-width:800px; margin:2rem auto">Hedefimiz, her Türk vatandaşının cebinde taşıyabileceği, her dilde konuşabilen ama Türk ekonomisini en iyi anlayan bir "Kişisel Finans Direktörü" olmaktır.</p>
   <div style="margin-top:3rem">
-    <span class="tech-tag">Next.js 16</span>
-    <span class="tech-tag">Google Gemini</span>
-    <span class="tech-tag">LangGraph</span>
-    <span class="tech-tag">PostgreSQL</span>
-    <span class="tech-tag">TypeScript</span>
+    <div class="stat-number" style="font-size:5rem">FinanceAI Pro</div>
+    <div class="stat-label" style="font-size:1.5rem">Akıllı Finansal Gelecek Burada Başlıyor</div>
   </div>
-  <div class="footer-note" style="margin-top:3rem">github.com/yourusername/financeai-pro</div>
+  <div class="footer-note" style="margin-top:6rem">
+    Teşekkür Ederiz. Sorularınızı bekliyoruz.<br>
+    <strong>founders@financeai.pro</strong>
+  </div>
 </div>
 
 </body>

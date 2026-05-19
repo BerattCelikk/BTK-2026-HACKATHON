@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai"
 import prisma from "@/lib/prisma"
 import { getModel } from "@/lib/gemini"
+import { generateRAGContext } from "@/lib/rag-query"
 
 export class BudgetOptimizerAgent {
   private genAI: GoogleGenerativeAI
@@ -141,13 +142,12 @@ export class BudgetOptimizerAgent {
   }
 
   async createBudgetWithTools(query: string, userId: string): Promise<string> {
+    const ragContext = await generateRAGContext(query)
+    const enhancedPrompt = `${ragContext}\n\nKullanıcının talebi: "${query}"\n\nKullanıcı ID: ${userId}\n\nİlk olarak fetch_user_transactions ile kullanıcının işlemlerini çek, analiz et ve bütçe önerisi sun. Bilgi tabanındaki (RAG) bütçe kurallarını (örn: 50/30/20) temel al. Kullanıcı bütçeyi onaylarsa save_budget_to_db ile kaydet.`
+
     const chat = this.getModel().startChat()
 
-    let result = await chat.sendMessage([
-      {
-        text: `Kullanıcının talebi: "${query}"\n\nKullanıcı ID: ${userId}\n\nİlk olarak fetch_user_transactions ile kullanıcının işlemlerini çek, analiz et ve 50/30/20 kuralına göre bir bütçe planı oluştur. Kullanıcı bütçeyi onaylarsa (örneğin 'kaydet', 'onayla', 'ekle' gibi ifadeler görürsen) save_budget_to_db ile veritabanına kaydet.`,
-      },
-    ])
+    let result = await chat.sendMessage([{ text: enhancedPrompt }])
 
     let response = result.response
     let calls = response.functionCalls()

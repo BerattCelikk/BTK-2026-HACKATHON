@@ -1,0 +1,26 @@
+{
+  "Common": {
+    "dashboard": "Panel",
+    "budget": "Bütçe",
+    "invest": "Yatırım",
+    "debt": "Borç",
+    "learn": "Eğitim",
+    "profile": "Profil",
+    "chat": "AI Chat",
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu"
+  },
+  "Dashboard": {
+    "healthScore": "Finansal Sağlık Skoru",
+    "dailyBriefing": "Günlük Özet",
+    "anomalies": "Uyarılar & Anomaliler",
+    "stats": "İstatistikler",
+    "spendingChart": "Harcama Dağılımı",
+    "badges": "Başarımlar"
+  },
+  "Chat": {
+    "placeholder": "Finansal bir soru sorun...",
+    "agentThinking": "Agent düşünüyor...",
+    "welcome": "Merhaba! Ben FinanceAI asistanınız. Size nasıl yardımcı olabilirim?"
+  }
+}

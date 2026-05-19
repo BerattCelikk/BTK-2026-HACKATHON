@@ -1,3 +1,6 @@
+import { financialRAG } from "@/lib/rag"
+import { generateContent } from "@/lib/gemini"
+
 export class EducationAgent {
   private lessons = [
     {
@@ -150,16 +153,31 @@ Kartopu Yöntemi:
       (l) => l.topic.toLowerCase() === topic.toLowerCase()
     )
 
-    if (topicLessons.length === 0) {
-      return `**${topic}** konusunda henüz bir ders bulunmuyor.`
-    }
+    // Use RAG to enhance the summary with broader knowledge
+    const ragContext = await financialRAG.query(topic, 3)
+    const ragContent = ragContext.map(d => d.content).join("\n\n")
 
-    let summary = `**${topic} - Eğitim Özeti**\n\n`
-    for (const lesson of topicLessons) {
-      summary += `**${lesson.title}** (${lesson.difficulty} - ${lesson.duration})\n`
-      summary += `${lesson.content.substring(0, 100)}...\n\n`
-    }
-    summary += `\nBu konuda ${topicLessons.length} ders bulunuyor.`
-    return summary
+    const prompt = `
+Finansal eğitim agent'ı olarak "${topic}" konusu hakkında kısa ve eğitici bir özet hazırla.
+
+Aşağıdaki yerel derslerimize ve bilgi tabanımıza dayan:
+
+YEREL DERSLER:
+${topicLessons.map(l => `- ${l.title}: ${l.content.substring(0, 150)}...`).join("\n") || "Bu konuda özel yerel ders bulunmuyor."}
+
+BİLGİ TABANI:
+${ragContent || "Genel finansal bilgilerini kullan."}
+
+Format:
+- Konu başlığı (kalın)
+- 3-4 cümlelik açıklayıcı özet
+- 3 adet önemli ipucu (bullet points)
+- "Daha fazla bilgi için Learn sayfasındaki derslerimize göz atabilirsiniz." cümlesiyle bitir.
+
+Yanıt:
+    `
+
+    const response = await generateContent(prompt)
+    return response.text
   }
 }

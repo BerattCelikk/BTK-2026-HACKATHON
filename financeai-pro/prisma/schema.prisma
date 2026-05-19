@@ -1,10 +1,11 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector")]
 }
 
 enum TransactionType {
@@ -66,6 +67,153 @@ model User {
   debts           Debt[]
   learningProgress LearningProgress[]
   conversations   Conversation[]
+  anomalies       Anomaly[]
+  preferences     UserPreferences?
+  agentHistory    ConversationHistory[]
+  agentAnalytics  AgentAnalytics[]
+  
+  // Advanced Analytics
+  portfolioAssets  PortfolioAsset[]
+  taxOptimizations TaxOptimization[]
+  opportunityScans OpportunityScan[]
+  financialMetrics FinancialMetric[]
+  
+  // Recommendations
+  dismissedRecommendations DismissedRecommendation[]
+  pushSubscriptions        PushSubscription[]
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  keys      Json     // Contains p256dh and auth
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model DismissedRecommendation {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recommendationId String   // Unique identifier for the specific recommendation logic
+  dismissedAt      DateTime @default(now())
+  expiresAt        DateTime // When the recommendation can be shown again (e.g., 30 days later)
+
+  @@index([userId, recommendationId])
+}
+
+model PortfolioAsset {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assetType      String   // "stocks", "bonds", "crypto", "cash", "gold"
+  amount         Decimal
+  percentage     Decimal  // 0-100
+  purchasePrice  Decimal
+  currentPrice   Decimal
+  expectedReturn Decimal  // annual %
+  riskLevel      String   // "low", "medium", "high"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([userId, assetType])
+  @@index([userId])
+}
+
+model TaxOptimization {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategy         String   // "tax-loss-harvesting", "long-term-hold", etc
+  savingsPotential Decimal  // TRY
+  riskLevel        String   // "low", "medium", "high"
+  description      String
+  isApplied        Boolean  @default(false)
+  appliedAt        DateTime?
+  createdAt        DateTime @default(now())
+
+  @@index([userId])
+}
+
+model OpportunityScan {
+  id                  String   @id @default(cuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset               String   // "BIST100", "BTC", "ETH", "Gold", "USD/TRY"
+  signal              String   // "BUY", "HOLD", "SELL"
+  confidence          Decimal  // 0-1
+  expectedReturn      Decimal  // % yearly
+  riskScore           Decimal  // 0-10
+  reason              String
+  technicalIndicators String   // JSON of RSI, MACD, etc
+  scanDate            DateTime @default(now())
+  expiresAt           DateTime // signal valid until
+
+  @@index([userId, scanDate])
+}
+
+model FinancialMetric {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metricName   String   // "sharpe_ratio", "debt_to_income", "savings_rate"
+  value        Decimal
+  healthyMin   Decimal
+  healthyMax   Decimal
+  trend        String   // "improving", "declining", "stable"
+  calculatedAt DateTime @default(now())
+
+  @@unique([userId, metricName, calculatedAt])
+  @@index([userId, metricName])
+}
+
+model UserPreferences {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  preferredAgent    String?
+  favoriteAgents    Json     @default("[]")
+  communicationStyle String  @default("detailed") // 'brief' | 'detailed' | 'technical'
+  responseLanguage  String   @default("tr")       // 'tr' | 'en'
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ConversationHistory {
+  id            String   @id @default(cuid())
+  userId        String
+  agentId       String
+  role          String   // 'user' | 'assistant' | 'agent' | 'system'
+  content       String   @db.Text
+  timestamp     DateTime @default(now())
+  tokens        Int?
+  metadata      Json?
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, agentId])
+  @@index([timestamp])
+}
+
+model AgentAnalytics {
+  id              String   @id @default(cuid())
+  userId          String
+  agentId         String
+  responseTime    Int      // in ms
+  success         Boolean
+  confidence      Float?
+  error           String?  @db.Text
+  interactionType String?  // 'chat' | 'tool_call'
+  timestamp       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([agentId])
+  @@index([timestamp])
 }
 
 model Transaction {
@@ -190,3 +338,33 @@ model Conversation {
   @@index([userId])
   @@index([userId, createdAt])
 }
+
+model KnowledgeBase {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  category  String   // "Budget", "Debt", "Investment", "Savings", "Retirement"
+  embedding Unsupported("vector(384)")? // Gemini produces 384-dim vectors
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+}
+
+model Anomaly {
+  id             String   @id @default(cuid())
+  userId         String
+  type           String   // "spending_spike", "category_anomaly", "frequency_anomaly", "budget_breach"
+  severity       Int      // 1-10
+  message        String   @db.Text
+  transactionId  String?
+  reviewed       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+

@@ -1,7 +1,7 @@
 ﻿"use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { Link, usePathname, useRouter } from "@/lib/navigation"
+import { useTranslations, useLocale } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,26 +13,35 @@ import {
   Bot,
   Menu,
   X,
+  Languages,
 } from "lucide-react"
 import { useState } from "react"
 
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/budget", label: "Bütçe", icon: Wallet },
-  { href: "/invest", label: "Yatırım", icon: TrendingUp },
-  { href: "/learn", label: "Eğitim", icon: GraduationCap },
-  { href: "/debt", label: "Borç", icon: CreditCard },
-]
-
 export function Sidebar() {
+  const t = useTranslations("Common")
+  const locale = useLocale()
   const pathname = usePathname()
+  const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const navItems = [
+    { href: "/dashboard", label: t("dashboard"), icon: LayoutDashboard },
+    { href: "/budget", label: t("budget"), icon: Wallet },
+    { href: "/invest", label: t("invest"), icon: TrendingUp },
+    { href: "/learn", label: t("learn"), icon: GraduationCap },
+    { href: "/debt", label: t("debt"), icon: CreditCard },
+  ]
+
+  const toggleLanguage = () => {
+    const nextLocale = locale === "tr" ? "en" : "tr"
+    router.replace(pathname, { locale: nextLocale })
+  }
 
   return (
     <>
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden"
+        className="fixed top-4 left-4 z-50 lg:hidden text-white"
       >
         {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
@@ -77,11 +86,22 @@ export function Sidebar() {
             })}
           </nav>
 
-          <div className="border-t border-gray-800 p-4">
+          <div className="border-t border-gray-800 p-4 space-y-4">
+            <button
+              onClick={toggleLanguage}
+              className="flex w-full items-center justify-between rounded-lg border border-gray-800 px-3 py-2 text-xs font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Languages className="h-4 w-4" />
+                <span>{locale === "tr" ? "English" : "Türkçe"}</span>
+              </div>
+              <span className="text-[10px] uppercase font-bold opacity-50">{locale}</span>
+            </button>
+
             <div className="rounded-lg bg-gradient-to-r from-emerald-600/10 to-teal-600/10 p-3">
               <p className="text-xs text-emerald-400 mb-1">AI Asistan</p>
               <p className="text-xs text-gray-400">
-                5 uzman finansal danışman
+                {locale === "tr" ? "5 uzman finansal danışman" : "5 expert financial advisors"}
               </p>
             </div>
           </div>

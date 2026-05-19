@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
+import { generateRAGContext } from "@/lib/rag-query"
 
 export class DebtManagerAgent {
   private genAI: GoogleGenerativeAI
@@ -10,11 +11,14 @@ export class DebtManagerAgent {
   async analyzeDebtStrategy(debts: { name: string; amount: number; interestRate: number }[]): Promise<string> {
     if (debts.length === 0) return "Tebrikler! Hiç borcunuz yok! 🎉"
 
+    const ragContext = await generateRAGContext("borç ödeme stratejileri")
     const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
     const debtList = debts.map((d, i) => `${i + 1}. ${d.name}: ${d.amount.toLocaleString("tr-TR")} TL (Faiz: %${d.interestRate})`).join("\n")
     const totalDebt = debts.reduce((sum, d) => sum + d.amount, 0)
 
     const prompt = `
+${ragContext}
+
 Borç yönetimi uzmanı olarak, kullanıcının borçlarını en verimli şekilde nasıl ödeyebileceğini analiz et.
 
 BORÇLAR:

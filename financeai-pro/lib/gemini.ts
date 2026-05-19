@@ -51,6 +51,13 @@ export async function generateContent(
   return { text, raw: text }
 }
 
+export async function embedContent(text: string): Promise<number[]> {
+  const client = getClient()
+  const embeddingModel = client.getGenerativeModel({ model: "text-embedding-004" })
+  const result = await embeddingModel.embedContent(text)
+  return result.embedding.values
+}
+
 export async function generateChatResponse(
   messages: { role: "user" | "model"; content: string }[],
   systemPrompt?: string

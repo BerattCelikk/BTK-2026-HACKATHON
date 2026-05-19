@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai"
 import prisma from "@/lib/prisma"
 import type { AnomalyResult } from "@/types"
+import { generateRAGContext } from "@/lib/rag-query"
 
 export class FinancialAnalystAgent {
   private genAI: GoogleGenerativeAI
@@ -63,10 +64,11 @@ export class FinancialAnalystAgent {
   }
 
   async analyzeFinances(query: string, userId: string): Promise<{ analysis: any; summary: string }> {
+    const ragContext = await generateRAGContext(query)
+    const enhancedPrompt = `${ragContext}\n\nKullanıcının sorusu: "${query}"\n\nKullanıcı ID: ${userId}\n\nFinansal analiz yapmak için fetch_user_transactions fonksiyonunu kullan ve detaylı bir rapor hazırla. Soruyu yanıtlarken bilgi tabanındaki (RAG) verileri de göz önünde bulundur.`
+
     const chat = this.getModel().startChat()
-    let result = await chat.sendMessage([
-      { text: `Kullanıcının sorusu: "${query}"\n\nKullanıcı ID: ${userId}\n\nFinansal analiz yapmak için fetch_user_transactions fonksiyonunu kullan ve detaylı bir rapor hazırla.` },
-    ])
+    let result = await chat.sendMessage([{ text: enhancedPrompt }])
     let response = result.response
     let calls = response.functionCalls()
     while (calls && calls.length > 0) {

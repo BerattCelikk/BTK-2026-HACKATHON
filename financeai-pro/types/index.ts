@@ -151,13 +151,28 @@ export interface AssetAllocation {
   amount: number
 }
 
+export type AnomalyType = "spending_spike" | "category_anomaly" | "budget_breach"
+
 export interface AnomalyResult {
-  type: "spike" | "duplicate" | "unusual"
-  severity: "high" | "medium" | "low"
-  category: string
-  amount: number
-  description: string
-  suggestion: string
+  type: AnomalyType
+  severity: number
+  message: string
+  transactionId: string | null
+  context: Record<string, any>
 }
 
 export type RiskProfile = "conservative" | "moderate" | "aggressive" | "very_aggressive"
+
+export interface TickerItem {
+  symbol: string       // "USD/TRY", "BTC/USD", etc.
+  name: string         // "Dolar", "Bitcoin", etc.
+  price: number        // 38.45, 68240, etc.
+  change: number       // Price change amount
+  changePercent: number // Percentage change
+}
+
+export interface MarketDataResponse {
+  items: TickerItem[]
+  lastUpdated: string
+  source: string
+}

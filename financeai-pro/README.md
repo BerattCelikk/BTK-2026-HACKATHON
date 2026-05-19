@@ -1,4 +1,4 @@
-﻿# 🏆 FinanceAI Pro
+# 🏆 FinanceAI Pro
 
 > **Multi-Agent AI Financial Advisory Platform** — BTK Academy 2026 Hackathon
 >
@@ -10,6 +10,16 @@
   <img src="https://img.shields.io/badge/architecture-multi--agent-purple" alt="Architecture" />
   <img src="https://img.shields.io/badge/license-MIT-emerald" alt="License" />
 </p>
+
+---
+
+## 📱 Mobile & PWA
+FinanceAI Pro is a Progressive Web App, designed for a high-end mobile experience.
+
+- **Offline Mode**: Access your financial dashboard and historical data even without internet.
+- **Push Notifications**: Receive real-time alerts for spending spikes and market opportunities.
+- **Install on iOS**: Tap **Share** → **Add to Home Screen**.
+- **Install on Android**: Tap **Menu** → **Install App**.
 
 ---
 
@@ -52,17 +62,20 @@ graph TD
 ## ✨ Key Features
 
 ### 🤖 Proactive AI Intelligence
+- **Vector RAG (Semantic Search)** — Knowledge base powered by Gemini Embeddings and pgvector for context-aware advisory
 - **Daily Briefing** — Personalized AI-generated financial summary every morning
 - **Anomaly Detection** — Automated fraud/spike alerts using Gemini analysis of 3-month history
 - **Smart Receipt Scanner** — Upload receipt images → Gemini Vision extracts amount, category, description
 
 ### 📊 Visual Analytics
+- **Wealth Forecasting** — Interactive compound interest projection (1-30 years) with scenario building
 - **Financial Health Score** — 0-100 animated gauge (savings rate + debt status + budget adherence)
 - **Gamified Badges** — 5 achievements (Tasarruf Ustası, Borç Yokedici, Bütçe Kahramanı, Yatırımcı, Analist)
 - **Debt Payoff Visualizer** — Interactive Snowball vs Avalanche chart comparison
-- **Live Market Ticker** — USD/TRY, EUR/TRY, BTC/USD, BIST100 scrolling marquee
+- **Live Market Ticker** — Real-time USD, EUR, BTC, ETH, and BIST100 data from live APIs
 
 ### 🏢 Enterprise Ready
+- **Multilingual (i18n)** — Full Turkish and English support with `next-intl`
 - **CSV Export** — One-click download of all transactions (UTF-8 BOM, professional format)
 - **Print Report** — Beautifully formatted A4 financial summary with `@media print` styles
 - **Multi-Agent Chat** — Conversational AI with intent routing across 5 specialist agents
@@ -88,34 +101,11 @@ graph TD
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Deployment (Vercel)
 
-### Prerequisites
-- Node.js 20+, PostgreSQL 16+, Google Gemini API key, Clerk account
-
-```bash
-# 1. Install dependencies
-npm install --legacy-peer-deps
-
-# 2. Configure environment
-cp .env.example .env
-# Edit .env: DATABASE_URL, GEMINI_API_KEY, Clerk keys
-
-# 3. Setup database
-npx prisma generate
-npx prisma db push
-
-# 4. Seed demo data (recommended)
-npx tsx prisma/seed/index.ts
-
-# 5. Run dev server
-npm run dev
-```
-
-### Docker
-```bash
-docker compose up -d
-```
+1. **Environment Variables**: Set `DATABASE_URL`, `GEMINI_API_KEY`, `CLERK_SECRET_KEY`, and `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`.
+2. **Build**: `npm run build` generates a standalone output.
+3. **Database**: Run `npx prisma db push` during deployment to ensure the schema is in sync.
 
 ---
 
@@ -171,29 +161,6 @@ financeai-pro/
 ├── types/                         # TypeScript definitions
 └── prisma/seed/                   # Demo data seeder
 ```
-
----
-
-## 📊 API Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/agents/chat` | POST | Multi-agent chat with intent routing |
-| `/api/agents/analyze` | POST | Direct agent invocation (analyze, invest, budget, debt) |
-| `/api/agents/invest` | POST | Investment portfolio simulation |
-| `/api/budget` | GET/POST | Budget data fetching & transaction creation |
-| `/api/vision/receipt` | POST | Receipt image parsing (Gemini Vision) |
-| `/api/export/transactions` | GET | CSV download of all transactions |
-
----
-
-## 🔮 Future Roadmap
-
-- **Real-time market data** — WebSocket integration for live prices
-- **Mobile app** — React Native companion
-- **Multi-language** — English, German, Arabic support
-- **Portfolio management** — Automated rebalancing
-- **Community** — Expert advisor marketplace
 
 ---
 

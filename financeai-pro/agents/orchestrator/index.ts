@@ -5,6 +5,7 @@ import { EducationAgent } from "../education-agent/agent"
 import { DebtManagerAgent } from "../debt-manager/agent"
 import { classifyIntent, synthesizeResponse } from "@/lib/langgraph"
 import { generateContent } from "@/lib/gemini"
+import { financialRAG } from "@/lib/rag"
 import prisma from "@/lib/prisma"
 import type { AgentType, AgentIntent, Message } from "@/types"
 import { generateId } from "@/lib/utils"
@@ -190,7 +191,8 @@ export class OrchestratorAgent {
     }
 
     if (intent === "general_query" || !responses[agentsInvolved[0] || ""]) {
-      const geminiResponse = await generateContent(query, {
+      const ragPrompt = await financialRAG.generateContextualAnswer(query)
+      const geminiResponse = await generateContent(ragPrompt, {
         temperature: 0.7,
       })
 

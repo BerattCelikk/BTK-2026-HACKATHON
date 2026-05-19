@@ -1,4 +1,5 @@
 ﻿import { Sidebar, MobileHeader } from "@/components/shared/sidebar"
+import { AnomalyNotificationCenter } from "@/components/alerts/AnomalyNotificationCenter"
 
 export default function DashboardLayout({
   children,
@@ -14,6 +15,7 @@ export default function DashboardLayout({
           {children}
         </div>
       </main>
+      <AnomalyNotificationCenter />
     </div>
   )
 }

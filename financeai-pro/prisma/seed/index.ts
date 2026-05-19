@@ -1,11 +1,72 @@
 ﻿// Seed script for demo data
 // Run with: npx tsx prisma/seed/index.ts
-import { PrismaClient } from "@prisma/client"
+import "dotenv/config"
+import prisma from "../../lib/prisma"
+import { financialRAG } from "../../lib/rag"
+import { embedText } from "../../lib/embedding"
+import { KNOWLEDGE_BASE_ARTICLES } from "../../lib/knowledge-base"
 
-const prisma = new PrismaClient()
+async function seedKnowledgeBase() {
+  console.log("\n📚 Seeding Knowledge Base with embeddings...")
+  
+  let successCount = 0
+  let skipCount = 0
+  let errorCount = 0
+  
+  for (const article of KNOWLEDGE_BASE_ARTICLES) {
+    try {
+      // Check if article already exists
+      const existing = await prisma.knowledgeBase.findFirst({
+        where: { title: article.title }
+      })
+      
+      if (existing) {
+        console.log(`  ⊘ Skipping "${article.title}" (already exists)`)
+        skipCount++
+        continue
+      }
+      
+      // Generate embedding for article content
+      console.log(`  ⏳ Embedding "${article.title}"...`)
+      const embedding = await embedText(article.content)
+      
+      // Insert article with embedding into database
+      // We use raw SQL because Prisma 7 still requires it for vector columns in create
+      const vectorString = `[${embedding.join(",")}]`
+      await prisma.$executeRaw`
+        INSERT INTO "KnowledgeBase" (id, title, content, category, embedding, "createdAt", "updatedAt")
+        VALUES (gen_random_uuid()::text, ${article.title}, ${article.content}, ${article.category}, ${vectorString}::vector, NOW(), NOW())
+      `
+      
+      console.log(`  ✓ Seeded "${article.title}"`)
+      successCount++
+      
+      // Rate limiting: wait 1 second between embeddings to avoid API limits
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+    } catch (error) {
+      console.error(`  ✗ Failed to seed "${article.title}":`, error)
+      errorCount++
+    }
+  }
+  
+  console.log(`\n📊 Knowledge Base Seeding Summary:`)
+  console.log(`   ✓ Successfully seeded: ${successCount}`)
+  console.log(`   ⊘ Skipped (already exist): ${skipCount}`)
+  console.log(`   ✗ Errors: ${errorCount}`)
+}
 
 async function main() {
   console.log("Seeding database...")
+
+  // Seed RAG Knowledge Base
+  try {
+    console.log("Seeding RAG Knowledge Base...")
+    await financialRAG.seedKnowledgeBase()
+    console.log("RAG Knowledge Base seeded.")
+  } catch (error) {
+    console.error("RAG seeding failed (continuing with other seeds):", error)
+  }
 
   const user = await prisma.user.upsert({
     where: { email: "demo@financeai.com" },
@@ -128,6 +189,10 @@ async function main() {
   })
 
   console.log("Created debts")
+  
+  // Seed Knowledge Base
+  await seedKnowledgeBase()
+  
   console.log("Database seeded successfully!")
 }
 

@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { RiskProfile } from "@/types"
+import { generateRAGContext } from "@/lib/rag-query"
 
 export class InvestmentAdvisorAgent {
   private genAI: GoogleGenerativeAI
@@ -13,8 +14,11 @@ export class InvestmentAdvisorAgent {
     amount: number
     horizon: number
   }): Promise<any> {
+    const ragContext = await generateRAGContext("yatırım stratejileri ve risk yönetimi")
     const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
     const prompt = `
+${ragContext}
+
 Uzman bir yatırım danışmanı olarak, ${input.amount.toLocaleString("tr-TR")} TL'i ${input.horizon} yıl için nasıl yatırması gerektiğini öner.
 
 RİSK PROFİLİ: ${this.translateRiskProfile(input.riskProfile)}
@@ -168,7 +172,7 @@ Sadece JSON yanıtı ver:
       "- Kısa vadeli dalgalanmalara takılmadan uzun vadeli düşünün",
       "",
       `**Başlangıç:** ${data.amount.toLocaleString("tr-TR")} TL`,
-      `**Vade:** ${data.timeHorizon} yıl`,
+      `**Vade:** ${data.timeHorizon} year`,
       "",
       "**⚠️ Uyarılar:**",
       "- Yatırımlarınızın değeri düşebilir",

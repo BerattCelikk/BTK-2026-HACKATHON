@@ -1,0 +1,26 @@
+{
+  "Common": {
+    "dashboard": "Dashboard",
+    "budget": "Budget",
+    "invest": "Invest",
+    "debt": "Debt",
+    "learn": "Learn",
+    "profile": "Profile",
+    "chat": "AI Chat",
+    "loading": "Loading...",
+    "error": "An error occurred"
+  },
+  "Dashboard": {
+    "healthScore": "Financial Health Score",
+    "dailyBriefing": "Daily Briefing",
+    "anomalies": "Alerts & Anomalies",
+    "stats": "Statistics",
+    "spendingChart": "Spending Breakdown",
+    "badges": "Achievements"
+  },
+  "Chat": {
+    "placeholder": "Ask a financial question...",
+    "agentThinking": "Agent is thinking...",
+    "welcome": "Hello! I am your FinanceAI assistant. How can I help you today?"
+  }
+}
